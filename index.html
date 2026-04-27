@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOMO AGENCY — Comp Card Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#0a0a0a;--white:#fff;
+  --red:#9b1a1a;--red-light:#c42b2b;
+  --muted:#888;--border:rgba(155,26,26,0.3);--danger:#c0392b;
+  --header-h:72px;
+  --sidebar-w:200px;
+}
+html,body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased;}
+body{-webkit-user-select:none;user-select:none;}
+img{pointer-events:none;-webkit-user-drag:none;}
+
+/* ── HEADER ── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.4rem 3rem;
+  border-bottom:0.5px solid var(--border);
+  border-left:3px solid var(--red);
+  position:sticky;top:0;background:var(--black);z-index:200;
+  height:var(--header-h);
+}
+.logo{display:flex;flex-direction:column;align-items:flex-start;line-height:1;}
+.logo-top{font-family:'Rajdhani',sans-serif;font-size:1.9rem;font-weight:700;letter-spacing:0.12em;color:var(--white);text-transform:uppercase;line-height:1;}
+.logo-top .bar{font-weight:200;margin:0 3px;opacity:0.65;}
+.logo-sub{font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:500;letter-spacing:0.45em;color:var(--red-light);text-transform:uppercase;margin-top:2px;}
+.header-right{display:flex;align-items:center;gap:1rem;}
+.inquiry-btn{display:inline-flex;align-items:center;gap:0.4rem;font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--white);background:var(--red);border:none;padding:0.52rem 1.1rem;cursor:pointer;text-decoration:none;transition:background 0.2s;white-space:nowrap;line-height:1;}
+.inquiry-btn:hover{background:var(--red-light);}
+.inquiry-btn svg{width:14px;height:14px;flex-shrink:0;}
+.admin-btn{background:none;border:none;color:rgba(255,255,255,0.18);cursor:pointer;padding:0.4rem;display:flex;align-items:center;justify-content:center;transition:color 0.2s;border-radius:4px;}
+.admin-btn:hover{color:rgba(255,255,255,0.45);}
+.admin-btn svg{width:18px;height:18px;}
+.admin-badge{font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:var(--red-light);background:rgba(155,26,26,0.15);border:0.5px solid var(--red);padding:0.3rem 0.75rem;}
+
+/* ── LAYOUT ── */
+.main-layout{display:flex;min-height:calc(100vh - var(--header-h));}
+
+/* ── LEFT SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);flex-shrink:0;
+  border-right:0.5px solid var(--border);
+  padding:1.5rem 0;
+  position:sticky;top:var(--header-h);
+  height:calc(100vh - var(--header-h));
+  overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--red) transparent;
+}
+.sidebar::-webkit-scrollbar{width:3px;}
+.sidebar::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px;}
+.sidebar-group{margin-bottom:3rem;}
+.sidebar-group-title{
+  font-family:'Rajdhani',sans-serif;font-size:1.4rem;font-weight:700;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--white);
+  padding:0 1.2rem;margin-bottom:0.6rem;
+  border-bottom:1px solid var(--border);padding-bottom:0.5rem;
+  cursor:pointer;transition:color 0.15s;
+  background:none;border-top:none;border-left:none;border-right:none;
+  width:100%;text-align:left;display:block;
+}
+.sidebar-group-title:hover{color:var(--red-light);}
+.sidebar-item{
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:'Rajdhani',sans-serif;font-size:0.82rem;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);background:none;border:none;
+  padding:0.6rem 1.2rem;cursor:pointer;width:100%;text-align:left;
+  transition:color 0.15s,background 0.15s,border-left 0.15s;
+  border-left:2px solid transparent;
+}
+.sidebar-item:hover{color:var(--white);background:rgba(155,26,26,0.08);}
+.sidebar-item.active{color:var(--white);background:rgba(155,26,26,0.15);border-left-color:var(--red);}
+.sidebar-count{
+  font-size:0.55rem;background:rgba(155,26,26,0.2);color:var(--red-light);
+  border-radius:10px;padding:1px 6px;min-width:16px;text-align:center;
+}
+.sidebar-item.active .sidebar-count{background:var(--red);color:#fff;}
+
+/* ── STICKY BARS ── */
+.admin-panel{display:none;background:rgba(155,26,26,0.06);border-bottom:0.5px solid var(--border);padding:0.75rem 3rem;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:sticky;top:var(--header-h);z-index:190;}
+.admin-panel.visible{display:flex;}
+.admin-panel-hint{font-family:'Rajdhani',sans-serif;font-size:0.72rem;letter-spacing:0.1em;color:rgba(196,43,43,0.7);}
+.upload-trigger{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--white);background:var(--red);border:none;padding:0.5rem 1.1rem;cursor:pointer;transition:background 0.2s;}
+.upload-trigger:hover{background:var(--red-light);}
+.logout-btn{font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);background:none;border:none;cursor:pointer;}
+.logout-btn:hover{color:var(--danger);}
+.grid-action-bar{display:none;background:rgba(10,10,10,0.95);border-bottom:0.5px solid var(--border);padding:0.6rem 3rem;align-items:center;gap:1rem;position:sticky;top:var(--header-h);z-index:190;}
+.grid-action-bar.visible{display:flex;}
+.grid-sel-count{font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#fff;flex:1;}
+.grid-select-all-btn{font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);background:none;border:0.5px solid var(--border);padding:0.35rem 0.8rem;cursor:pointer;white-space:nowrap;}
+.grid-select-all-btn:hover{color:#fff;border-color:#fff;}
+.grid-delete-btn{font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#fff;background:var(--danger);border:none;padding:0.4rem 0.9rem;cursor:pointer;opacity:0.35;pointer-events:none;}
+.grid-delete-btn.on{opacity:1;pointer-events:all;}
+.grid-delete-btn.on:hover{background:#e74c3c;}
+.grid-cancel-btn{font-family:'Rajdhani',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);background:none;border:0.5px solid var(--border);padding:0.35rem 0.8rem;cursor:pointer;}
+.grid-cancel-btn:hover{color:#fff;}
+
+/* 관리자 모드 보정 */
+body.admin-mode .gallery-section{padding-top:1.5rem;}
+
+/* ── LOADING / EMPTY ── */
+.loading-state{text-align:center;padding:5rem 2rem;color:var(--muted);}
+.loading-spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--red-light);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:5rem 2rem;color:var(--muted);}
+.empty-icon{font-size:2.5rem;margin-bottom:1rem;opacity:0.4;}
+.empty-text{font-size:1rem;opacity:0.5;}
+
+/* ── GALLERY ── */
+.content-area{flex:1;min-width:0;}
+.gallery-header{display:flex;align-items:center;justify-content:space-between;padding:2rem 3rem 0;}
+.section-title{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--white);letter-spacing:0.15em;text-transform:uppercase;margin:0;}
+.view-toggle{display:flex;gap:2px;background:rgba(155,26,26,0.1);padding:2px;border:0.5px solid var(--border);}
+.view-toggle-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:0.35rem 0.5rem;display:flex;align-items:center;justify-content:center;transition:background 0.15s,color 0.15s;}
+.view-toggle-btn.active{background:var(--red);color:#fff;}
+.view-toggle-btn:hover:not(.active){color:#fff;}
+.view-toggle-btn svg{width:16px;height:16px;}
+.gallery-section{padding:1.2rem 3rem 2rem;}
+
+.card-list{display:flex;flex-direction:column;}
+.card-wrap{position:relative;width:100%;border-bottom:0.5px solid rgba(155,26,26,0.15);overflow:hidden;-webkit-touch-callout:none;cursor:pointer;}
+.card-img-wrap{position:relative;width:100%;aspect-ratio:4/3;background:#111;}
+.card-img-wrap img{width:100%;height:100%;object-fit:contain;display:block;background:#111;}
+
+/* ── USER GRID VIEW (일반 방문자) ── */
+.card-list.user-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;}
+@media(min-width:600px){.card-list.user-grid{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:900px){.card-list.user-grid{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:1200px){.card-list.user-grid{grid-template-columns:repeat(4,1fr);}}
+.card-list.user-grid .card-wrap{border-bottom:none;aspect-ratio:4/3;cursor:pointer;width:auto;overflow:hidden;position:relative;}
+.card-list.user-grid .card-img-wrap{width:100%;height:100%;aspect-ratio:unset;}
+.card-list.user-grid .card-img-wrap img{object-fit:contain;background:#111;}
+
+/* ── ADMIN GRID VIEW ── */
+.card-list.grid-view{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+@media(min-width:600px){.card-list.grid-view{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:900px){.card-list.grid-view{grid-template-columns:repeat(5,1fr);}}
+@media(min-width:1200px){.card-list.grid-view{grid-template-columns:repeat(6,1fr);}}
+.card-list.grid-view .card-wrap{border-bottom:none;aspect-ratio:1;cursor:pointer;width:auto;overflow:hidden;position:relative;}
+.card-list.grid-view .card-img-wrap{width:100%;height:100%;aspect-ratio:unset;}
+.card-list.grid-view .card-img-wrap img{object-fit:cover;}
+.grid-sel-overlay{position:absolute;inset:0;background:rgba(192,57,43,0.5);opacity:0;transition:opacity 0.15s;pointer-events:none;display:flex;align-items:flex-start;justify-content:flex-start;}
+.card-wrap.grid-sel .grid-sel-overlay{opacity:1;}
+.grid-chk{width:26px;height:26px;background:var(--danger);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:6px;color:#fff;font-weight:700;font-size:0.85rem;flex-shrink:0;}
+.card-wrap.drag-src{opacity:0.3;}
+.card-wrap.drag-over-grid{outline:3px solid var(--red-light);outline-offset:-3px;}
+.card-wrap.lp-active::before{content:'';position:absolute;inset:0;background:rgba(192,57,43,0.3);z-index:3;pointer-events:none;}
+
+/* ── TOP 버튼 ── */
+.scroll-top-btn{position:fixed;bottom:2.2rem;right:2rem;width:48px;height:48px;background:var(--red);border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity 0.3s,transform 0.3s;z-index:300;}
+.scroll-top-btn.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+.scroll-top-btn:hover{background:var(--red-light);}
+.scroll-top-btn svg{width:18px;height:18px;color:#fff;}
+.scroll-top-btn span{font-family:'Rajdhani',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:0.15em;color:#fff;text-transform:uppercase;line-height:1;}
+
+/* ── 플로팅 문의 ── */
+.float-inquiry-btn{position:fixed;bottom:calc(2.2rem + 56px);right:2rem;z-index:300;width:48px;height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--red);color:var(--white);font-family:'Rajdhani',sans-serif;text-decoration:none;box-shadow:0 4px 16px rgba(0,0,0,0.25);opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity 0.3s,transform 0.3s,background 0.2s;white-space:nowrap;}
+.float-inquiry-btn.visible{opacity:1;pointer-events:all;transform:translateY(0);}
+.float-inquiry-btn:hover{background:var(--red-light);box-shadow:0 6px 24px rgba(0,0,0,0.35);}
+.float-inquiry-btn svg{width:18px;height:18px;flex-shrink:0;}
+.float-inquiry-btn span{font-family:'Rajdhani',sans-serif;font-size:0.55rem;font-weight:700;letter-spacing:0.1em;color:#fff;text-transform:uppercase;line-height:1;}
+
+/* ── LIGHTBOX ── */
+.lightbox-overlay{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:600;
+  align-items:center;justify-content:center;flex-direction:column;cursor:zoom-out;
+}
+.lightbox-overlay.open{display:flex;}
+.lightbox-img-wrap{
+  position:relative;max-width:92vw;max-height:78vh;display:flex;align-items:center;justify-content:center;cursor:default;
+}
+.lightbox-img-wrap img{
+  max-width:92vw;max-height:78vh;object-fit:contain;display:block;
+  pointer-events:none;-webkit-user-drag:none;-webkit-touch-callout:none;
+}
+/* 투명 오버레이로 저장 방지 */
+.lightbox-img-wrap::after{content:'';position:absolute;inset:0;z-index:1;}
+.lightbox-close{
+  position:fixed;top:1.2rem;right:1.5rem;background:none;border:none;
+  color:var(--white);cursor:pointer;z-index:610;opacity:0.5;transition:opacity 0.2s;
+}
+.lightbox-close:hover{opacity:1;}
+.lightbox-close svg{width:28px;height:28px;}
+.lightbox-bar{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin-top:1.2rem;z-index:2;
+}
+.lightbox-inquiry-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Rajdhani',sans-serif;font-size:0.75rem;font-weight:700;
+  letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--white);background:rgba(255,255,255,0.12);border:0.5px solid rgba(255,255,255,0.25);
+  padding:0.5rem 1.1rem;cursor:pointer;text-decoration:none;transition:background 0.2s,border-color 0.2s;
+}
+.lightbox-inquiry-btn:hover{background:var(--red);border-color:var(--red);}
+.lightbox-inquiry-btn svg{width:14px;height:14px;flex-shrink:0;}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--red);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;padding:0.75rem 1.5rem;z-index:2000;transition:transform 0.3s;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── MODALS ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,10,10,0.92);z-index:500;align-items:flex-start;justify-content:center;padding:3rem 2rem;overflow-y:auto;}
+.modal-overlay.open{display:flex;}
+.modal{background:#111;border:0.5px solid var(--border);padding:2.5rem;width:100%;max-width:500px;margin:auto;}
+.modal-sm{max-width:380px;}
+.modal-title{font-family:'Rajdhani',sans-serif;font-size:1.6rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--red-light);margin-bottom:0.3rem;}
+.modal-sub{font-family:'Rajdhani',sans-serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;}
+.field{margin-bottom:1.2rem;}
+.field label{display:block;font-family:'Rajdhani',sans-serif;font-size:0.7rem;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;}
+.field select,.field input{width:100%;background:#0a0a0a;border:0.5px solid var(--border);color:var(--white);font-family:'DM Sans',sans-serif;font-size:0.9rem;padding:0.75rem 1rem;outline:none;transition:border-color 0.2s;-webkit-user-select:auto;user-select:auto;}
+.field select:focus,.field input:focus{border-color:var(--red);}
+.field select option{background:#111;}
+.upload-zone{border:1px dashed var(--border);padding:2rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:1.2rem;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--red);background:rgba(155,26,26,0.05);}
+.upload-zone p{font-size:0.85rem;color:var(--muted);line-height:1.8;}
+.upload-zone strong{color:var(--red-light);font-weight:500;}
+#file-input{display:none;}
+.queue-header{display:none;align-items:center;justify-content:space-between;margin-bottom:0.5rem;}
+.queue-count-label{font-family:'Rajdhani',sans-serif;font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--red-light);}
+.queue-add-more{font-family:'Rajdhani',sans-serif;font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);background:none;border:0.5px solid var(--border);padding:0.3rem 0.7rem;cursor:pointer;}
+.queue-wrap{display:none;max-height:260px;overflow-y:auto;border:0.5px solid var(--border);margin-bottom:1.2rem;}
+.queue-item{display:flex;align-items:center;gap:0.75rem;padding:0.55rem 0.8rem;border-bottom:0.5px solid rgba(155,26,26,0.1);}
+.queue-item:last-child{border-bottom:none;}
+.queue-thumb{width:40px;height:40px;object-fit:cover;border:0.5px solid var(--border);flex-shrink:0;}
+.queue-name{flex:1;font-size:0.76rem;color:rgba(255,255,255,0.6);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.queue-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.85rem;padding:2px 6px;}
+.queue-remove:hover{color:var(--danger);}
+.progress-wrap{display:none;margin-bottom:1rem;}
+.progress-bar-bg{background:#1a1a1a;height:4px;width:100%;border-radius:2px;}
+.progress-bar-fill{background:var(--red-light);height:4px;border-radius:2px;width:0%;transition:width 0.15s;}
+.progress-text{font-family:'Rajdhani',sans-serif;font-size:0.72rem;letter-spacing:0.15em;color:var(--muted);margin-top:0.4rem;text-align:right;}
+.btn-primary{width:100%;background:var(--red);color:var(--white);border:none;font-family:'Rajdhani',sans-serif;font-size:0.85rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;padding:0.9rem;cursor:pointer;margin-top:0.5rem;transition:background 0.2s;}
+.btn-primary:hover:not(:disabled){background:var(--red-light);}
+.btn-primary:disabled{opacity:0.4;cursor:not-allowed;}
+.btn-cancel{width:100%;background:none;color:var(--muted);border:0.5px solid var(--border);font-family:'Rajdhani',sans-serif;font-size:0.8rem;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;padding:0.75rem;cursor:pointer;margin-top:0.75rem;}
+.btn-cancel:hover{color:var(--white);border-color:var(--muted);}
+.error-msg{font-size:0.75rem;color:var(--danger);margin-top:0.75rem;display:none;}
+
+@media(max-width:768px){
+  header{padding:1rem 1.2rem;height:64px;}
+  :root{--header-h:64px;--sidebar-w:76px;}
+  .logo-top{font-size:1.5rem;}
+  .logo-sub{font-size:0.75rem;}
+  .sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);padding:1rem 0;}
+  .sidebar-group{margin-bottom:2rem;}
+  .sidebar-group-title{font-size:0.8rem;padding:0 0.5rem 0.35rem;margin-bottom:0.35rem;letter-spacing:0.08em;text-align:center;border-bottom:1px solid var(--border);}
+  .sidebar-item{font-size:0.65rem;padding:0.5rem 0.5rem;letter-spacing:0.06em;justify-content:center;border-left:none;border-right:2px solid transparent;text-align:center;flex-direction:column;gap:3px;}
+  .sidebar-item.active{border-left-color:transparent;border-right-color:var(--red);}
+  .sidebar-count{font-size:0.45rem;padding:0px 4px;min-width:14px;}
+  .admin-panel,.grid-action-bar{padding:0.6rem 1.2rem;}
+  .gallery-section{padding:0.8rem 0.8rem 2rem;}
+  .gallery-header{padding:1rem 0.8rem 0;}
+  .section-title{font-size:1.4rem;}
+  .inquiry-label{display:none;}
+  .scroll-top-btn{right:1rem;bottom:1.5rem;width:42px;height:42px;}
+  .float-inquiry-btn{right:1rem;bottom:calc(1.5rem + 50px);width:42px;height:42px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-top">M<span class="bar">|</span>M</span>
+    <span class="logo-sub">MOMO AGENCY</span>
+  </div>
+  <div class="header-right">
+    <a class="inquiry-btn" href="https://pf.kakao.com/_uuqTG" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.72 1.612 5.1 4.03 6.55L5 21l4.56-2.42c.79.15 1.61.22 2.44.22 5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3z"/></svg>
+      <span class="inquiry-label">바로 문의</span>
+    </a>
+    <div id="admin-badge" class="admin-badge" style="display:none">ADMIN</div>
+    <button class="admin-btn" id="admin-btn" onclick="openLogin()" title="관리자">
+      <svg id="admin-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="admin-panel" id="admin-panel">
+  <div class="admin-panel-hint">탭으로 선택·삭제 · 꾹 누르면 다중선택 · 드래그로 순서변경 · 더블클릭으로 상세보기</div>
+  <div style="display:flex;gap:0.75rem;align-items:center;">
+    <button class="upload-trigger" onclick="openUpload()">+ 업로드</button>
+    <button class="logout-btn" onclick="doLogout()">로그아웃</button>
+  </div>
+</div>
+
+<div class="grid-action-bar" id="grid-action-bar">
+  <span class="grid-sel-count" id="grid-sel-count">0장 선택됨</span>
+  <button class="grid-select-all-btn" id="grid-sel-all-btn" onclick="gridToggleAll()">전체선택</button>
+  <button class="grid-delete-btn" id="grid-delete-btn" onclick="gridDelete()">삭제</button>
+  <button class="grid-cancel-btn" onclick="gridClearSel()">취소</button>
+</div>
+
+<div class="main-layout">
+  <!-- 좌측 사이드바 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-group">
+      <button class="sidebar-group-title" onclick="switchCatSidebar(this,'domestic-pick')">국내</button>
+      <button class="sidebar-item" data-cat="domestic-pick" onclick="switchCatSidebar(this,'domestic-pick')">
+        추천 <span class="sidebar-count" id="cnt-domestic-pick">0</span>
+      </button>
+      <button class="sidebar-item" data-cat="domestic-female" onclick="switchCatSidebar(this,'domestic-female')">
+        여자 <span class="sidebar-count" id="cnt-domestic-female">0</span>
+      </button>
+      <button class="sidebar-item" data-cat="domestic-male" onclick="switchCatSidebar(this,'domestic-male')">
+        남자 <span class="sidebar-count" id="cnt-domestic-male">0</span>
+      </button>
+    </div>
+    <div class="sidebar-group">
+      <button class="sidebar-group-title" onclick="switchCatSidebar(this,'foreign-pick')">외국인</button>
+      <button class="sidebar-item active" data-cat="foreign-pick" onclick="switchCatSidebar(this,'foreign-pick')">
+        추천 <span class="sidebar-count" id="cnt-foreign-pick">0</span>
+      </button>
+      <button class="sidebar-item" data-cat="foreign-female" onclick="switchCatSidebar(this,'foreign-female')">
+        여자 <span class="sidebar-count" id="cnt-foreign-female">0</span>
+      </button>
+      <button class="sidebar-item" data-cat="foreign-male" onclick="switchCatSidebar(this,'foreign-male')">
+        남자 <span class="sidebar-count" id="cnt-foreign-male">0</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="content-area">
+    <div class="gallery-header">
+      <div class="section-title" id="section-title">외국인 추천</div>
+      <div class="view-toggle" id="view-toggle">
+        <button class="view-toggle-btn" id="vt-list" onclick="setViewMode('list')" title="크게 보기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="7" rx="1"/><rect x="3" y="14" width="18" height="7" rx="1"/></svg>
+        </button>
+        <button class="view-toggle-btn active" id="vt-grid" onclick="setViewMode('grid')" title="모아 보기">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </button>
+      </div>
+    </div>
+    <main class="gallery-section">
+      <div class="card-list" id="card-list">
+        <div class="loading-state"><div class="loading-spinner"></div><div style="font-size:0.85rem;opacity:0.5;letter-spacing:0.1em;">LOADING...</div></div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div class="lightbox-img-wrap" onclick="event.stopPropagation()">
+    <img id="lightbox-img" src="" alt="" oncontextmenu="return false" ondragstart="return false">
+  </div>
+  <div class="lightbox-bar" onclick="event.stopPropagation()">
+    <a class="lightbox-inquiry-btn" id="lightbox-inquiry-btn" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.72 1.612 5.1 4.03 6.55L5 21l4.56-2.42c.79.15 1.61.22 2.44.22 5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3z"/></svg>
+      문의하기
+    </a>
+  </div>
+</div>
+
+<!-- 플로팅 버튼들 -->
+<a class="float-inquiry-btn" id="float-inquiry-btn" href="https://pf.kakao.com/_uuqTG" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 10.8c0 2.72 1.612 5.1 4.03 6.55L5 21l4.56-2.42c.79.15 1.61.22 2.44.22 5.523 0 10-3.477 10-7.8C22 6.477 17.523 3 12 3z"/></svg>
+  <span>문의</span>
+</a>
+<button class="scroll-top-btn" id="scroll-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+  <span>TOP</span>
+</button>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal modal-sm">
+    <div class="modal-title">Admin Access</div>
+    <div class="modal-sub">관리자 비밀번호 입력</div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="pw-input" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="error-msg" id="login-error">비밀번호가 올바르지 않습니다.</div>
+    <button class="btn-primary" onclick="doLogin()">로그인</button>
+    <button class="btn-cancel" onclick="closeLogin()">취소</button>
+  </div>
+</div>
+
+<!-- UPLOAD MODAL -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal">
+    <div class="modal-title">컴카드 업로드</div>
+    <div class="modal-sub">카테고리 선택 후 사진을 업로드</div>
+    <div class="field">
+      <label>카테고리</label>
+      <select id="upload-cat">
+        <option value="domestic-pick">국내 추천</option>
+        <option value="domestic-female">국내 여자</option>
+        <option value="domestic-male">국내 남자</option>
+        <option value="foreign-pick">외국인 추천</option>
+        <option value="foreign-female">외국인 여자</option>
+        <option value="foreign-male">외국인 남자</option>
+      </select>
+    </div>
+    <div class="upload-zone" id="drop-zone"
+      onclick="document.getElementById('file-input').click()"
+      ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+      <p><strong>드래그 &amp; 드롭</strong> 또는 클릭하여 선택<br>JPG · PNG · WEBP · <strong>여러 장 동시 선택 가능</strong><br><small style="opacity:.6">📋 Ctrl+V 붙여넣기도 가능합니다</small></p>
+    </div>
+    <input type="file" id="file-input" accept="image/*" multiple onchange="onFileSelect(event)">
+    <div class="queue-header" id="queue-header">
+      <span class="queue-count-label" id="queue-count-label"></span>
+      <button class="queue-add-more" onclick="document.getElementById('file-input').click()">+ 추가 선택</button>
+    </div>
+    <div class="queue-wrap" id="queue-wrap"></div>
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+      <div class="progress-text" id="progress-text"></div>
+    </div>
+    <div class="error-msg" id="upload-error">업로드할 이미지를 선택해주세요.</div>
+    <button class="btn-primary" id="upload-btn" onclick="doUpload()">업로드</button>
+    <button class="btn-cancel" id="upload-cancel-btn" onclick="closeUpload()">취소</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ADMIN_PW='ghdtmddn1@',CLOUD_NAME='delbgcrqu',UPLOAD_PRESET='mimmomo_unsigned';
+const ORDER_KEY='mimmomo_order_v1';
+const CAT_LABELS={'domestic-pick':'국내 추천','domestic-female':'국내 여자','domestic-male':'국내 남자','foreign-pick':'외국인 추천','foreign-female':'외국인 여자','foreign-male':'외국인 남자'};
+const CATS=Object.keys(CAT_LABELS);
+
+let isAdmin=false,currentCat='foreign-pick',cards=[],fileQueue=[],dragSrcIdx=null,selIds=new Set(),lpTimer=null,isDragging=false,lightboxCardId=null,viewMode='grid';
+
+// 복사 보호
+document.addEventListener('contextmenu',e=>{if(!isAdmin)e.preventDefault();});
+document.addEventListener('keydown',e=>{
+  if(!isAdmin){
+    if((e.ctrlKey||e.metaKey)&&['c','s','u','a','p'].includes(e.key.toLowerCase()))e.preventDefault();
+    if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase())))e.preventDefault();
+  }
+  if(e.key==='Escape')closeLightbox();
+});
+
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY>300;
+  document.getElementById('scroll-top-btn').classList.toggle('visible',s);
+  document.getElementById('float-inquiry-btn').classList.toggle('visible',s);
+},{passive:true});
+
+// ── 라이트박스 ──
+function getModelLabel(card){
+  const prefixMap={'domestic-pick':'DP','domestic-female':'DF','domestic-male':'DM','foreign-pick':'FP','foreign-female':'FF','foreign-male':'FM'};
+  const prefix=prefixMap[card.cat]||'MM';
+  const catCards=cards.filter(c=>c.cat===card.cat);
+  const idx=catCards.findIndex(c=>c.id===card.id);
+  return `${prefix}-${String(idx+1).padStart(3,'0')}`;
+}
+function openLightbox(cardId){
+  const card=cards.find(c=>c.id===cardId);
+  if(!card)return;
+  lightboxCardId=cardId;
+  document.getElementById('lightbox-img').src=card.url;
+  const modelLabel=getModelLabel(card);
+  const inquiryBtn=document.getElementById('lightbox-inquiry-btn');
+  const msg=encodeURIComponent(`${modelLabel} 모델 문의합니다.`);
+  inquiryBtn.href=`https://pf.kakao.com/_uuqTG/chat?msg=${msg}`;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(e){
+  if(e&&e.target&&e.target.closest&&(e.target.closest('.lightbox-img-wrap')||e.target.closest('.lightbox-bar')))return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-img').src='';
+  document.body.style.overflow='';
+  lightboxCardId=null;
+}
+
+// ── 순서 ──
+function saveOrder(){const m={};cards.forEach((c,i)=>{m[c.publicId]=i;});try{localStorage.setItem(ORDER_KEY,JSON.stringify(m));}catch(e){}}
+function getOrderMap(){try{return JSON.parse(localStorage.getItem(ORDER_KEY))||{};}catch{return {};}}
+
+async function deleteIds(ids){
+  cards=cards.filter(c=>!ids.includes(c.id));
+  cards.forEach((c,i)=>c.order=i);
+  selIds.clear();saveOrder();render();
+  showToast('삭제 중...');
+  try{
+    const res=await fetch('/.netlify/functions/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({public_ids:ids})});
+    const data=await res.json();
+    if(data.failed>0){showToast(`${data.ok}장 삭제, ${data.failed}장 실패`);}
+    else{showToast(ids.length===1?'삭제 완료':`${ids.length}장 삭제 완료`);}
+  }catch(err){showToast('삭제 실패: '+err.message);}
+}
+
+// ── 로드 ──
+async function loadCards(){
+  const orderMap=getOrderMap();let fetched=[];
+  const results=await Promise.allSettled(CATS.map(cat=>fetch(`https://res.cloudinary.com/${CLOUD_NAME}/image/list/mimmomo_${cat}.json`).then(r=>r.ok?r.json():Promise.reject()).then(data=>({cat,data}))));
+  results.forEach(r=>{
+    if(r.status!=='fulfilled')return;
+    const{cat,data}=r.value;
+    (data.resources||[]).forEach(res=>{
+      const pid=res.public_id;
+      fetched.push({id:pid,cat,url:`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${pid}`,publicId:pid,createdAt:res.created_at||'',order:orderMap[pid]!=null?orderMap[pid]:Date.parse(res.created_at||0)});
+    });
+  });
+  fetched.sort((a,b)=>a.order-b.order);
+  cards=fetched;render();
+}
+
+// ── 렌더 ──
+function render(){
+  const list=document.getElementById('card-list');
+  const filtered=cards.filter(c=>c.cat===currentCat);
+  CATS.forEach(cat=>{
+    const cnt=cards.filter(c=>c.cat===cat).length;
+    const el=document.getElementById('cnt-'+cat);if(el)el.textContent=cnt;
+  });
+  document.getElementById('section-title').textContent=CAT_LABELS[currentCat];
+  if(isAdmin){
+    list.className='card-list grid-view';
+    document.getElementById('view-toggle').style.display='none';
+    list.innerHTML=filtered.length?filtered.map((card,idx)=>{const sel=selIds.has(card.id);return `<div class="card-wrap${sel?' grid-sel':''}" data-id="${card.id}" data-idx="${idx}"><div class="card-img-wrap"><img src="${card.url}" alt="" loading="lazy"></div><div class="grid-sel-overlay"><div class="grid-chk">✓</div></div></div>`;}).join(''):`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">◇</div><div class="empty-text">No comp cards.</div></div>`;
+    bindGridEvents();updateGridBar();
+  }else{
+    document.getElementById('view-toggle').style.display='flex';
+    list.className=viewMode==='grid'?'card-list user-grid':'card-list';
+    list.innerHTML=filtered.length?filtered.map(card=>`<div class="card-wrap" data-id="${card.id}" onclick="openLightbox('${card.id}')"><div class="card-img-wrap"><img src="${card.url}" alt="" loading="lazy"></div></div>`).join(''):`<div class="empty-state"${viewMode==='grid'?' style="grid-column:1/-1"':''}><div class="empty-icon">◇</div><div class="empty-text">No comp cards.</div></div>`;
+  }
+}
+
+// ── 그리드 ──
+function bindGridEvents(){
+  document.querySelectorAll('#card-list .card-wrap').forEach(wrap=>{
+    if(wrap._bound)return;wrap._bound=true;
+    // 더블클릭 → 라이트박스
+    wrap.addEventListener('dblclick',e=>{e.preventDefault();e.stopPropagation();openLightbox(wrap.dataset.id);});
+    function startLP(){lpTimer=setTimeout(()=>{lpTimer=null;wrap.classList.add('lp-active');if(navigator.vibrate)navigator.vibrate(40);gridSel(wrap.dataset.id);wrap._lpSelecting=true;},500);}
+    function cancelLP(){clearTimeout(lpTimer);lpTimer=null;wrap.classList.remove('lp-active');wrap._lpSelecting=false;}
+    wrap.addEventListener('touchstart',e=>{if(e.touches.length!==1)return;startLP();},{passive:true});
+    wrap.addEventListener('touchmove',e=>{if(wrap._lpSelecting){const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY)?.closest('.card-wrap');if(el&&el.dataset.id)gridSel(el.dataset.id);e.preventDefault();}else{cancelLP();}},{passive:false});
+    wrap.addEventListener('touchend',()=>{const was=wrap._lpSelecting;cancelLP();if(!was)gridToggleSel(wrap.dataset.id);});
+    wrap.addEventListener('touchcancel',cancelLP);
+    wrap.addEventListener('mousedown',e=>{if(e.button!==0)return;startLP();});
+    wrap.addEventListener('mousemove',e=>{if(wrap._lpSelecting){const el=document.elementFromPoint(e.clientX,e.clientY)?.closest('.card-wrap');if(el&&el.dataset.id)gridSel(el.dataset.id);}});
+    wrap.addEventListener('mouseup',()=>{const was=wrap._lpSelecting;cancelLP();if(!was&&!isDragging)gridToggleSel(wrap.dataset.id);isDragging=false;});
+    wrap.setAttribute('draggable','true');
+    wrap.addEventListener('dragstart',e=>{isDragging=true;dragSrcIdx=parseInt(wrap.dataset.idx);e.dataTransfer.effectAllowed='move';setTimeout(()=>wrap.classList.add('drag-src'),0);});
+    wrap.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='move';document.querySelectorAll('.card-wrap.drag-over-grid').forEach(w=>w.classList.remove('drag-over-grid'));if(dragSrcIdx!==parseInt(wrap.dataset.idx))wrap.classList.add('drag-over-grid');});
+    wrap.addEventListener('dragleave',()=>wrap.classList.remove('drag-over-grid'));
+    wrap.addEventListener('drop',e=>{e.preventDefault();wrap.classList.remove('drag-over-grid');const ti=parseInt(wrap.dataset.idx);if(dragSrcIdx===null||dragSrcIdx===ti)return;const f=cards.filter(c=>c.cat===currentCat);const sc=f[dragSrcIdx],tc=f[ti];const si=cards.findIndex(c=>c.id===sc.id);cards.splice(si,1);const nt=cards.findIndex(c=>c.id===tc.id);const r=wrap.getBoundingClientRect();cards.splice(e.clientX>=r.left+r.width/2?nt+1:nt,0,sc);cards.forEach((c,i)=>c.order=i);saveOrder();dragSrcIdx=null;render();showToast('순서 저장됨');});
+    wrap.addEventListener('dragend',()=>{document.querySelectorAll('.card-wrap').forEach(w=>w.classList.remove('drag-src','drag-over-grid'));dragSrcIdx=null;});
+  });
+}
+function gridToggleSel(id){if(selIds.has(id))selIds.delete(id);else selIds.add(id);refreshSelUI();}
+function gridSel(id){selIds.add(id);refreshSelUI();}
+function gridClearSel(){selIds.clear();refreshSelUI();}
+function gridToggleAll(){const f=cards.filter(c=>c.cat===currentCat);const all=f.length>0&&f.every(c=>selIds.has(c.id));if(all)selIds.clear();else f.forEach(c=>selIds.add(c.id));refreshSelUI();}
+function refreshSelUI(){document.querySelectorAll('#card-list .card-wrap').forEach(w=>{w.classList.toggle('grid-sel',selIds.has(w.dataset.id));});updateGridBar();}
+function updateGridBar(){const f=cards.filter(c=>c.cat===currentCat);const n=selIds.size;const all=f.length>0&&f.every(c=>selIds.has(c.id));document.getElementById('grid-sel-count').textContent=n>0?`${n}장 선택됨`:'탭하여 선택  ·  꾹 눌러서 다중선택';document.getElementById('grid-delete-btn').classList.toggle('on',n>0);document.getElementById('grid-sel-all-btn').textContent=all?'선택해제':'전체선택';document.getElementById('grid-action-bar').classList.toggle('visible',isAdmin);}
+async function gridDelete(){if(!selIds.size)return;if(!confirm(`${selIds.size}장을 삭제하시겠습니까?`))return;await deleteIds([...selIds]);}
+
+// ── 뷰 모드 전환 ──
+function setViewMode(mode){
+  viewMode=mode;
+  document.getElementById('vt-list').classList.toggle('active',mode==='list');
+  document.getElementById('vt-grid').classList.toggle('active',mode==='grid');
+  render();
+}
+
+// ── 카테고리 ──
+function syncCatUI(cat){
+  document.querySelectorAll('.sidebar-item').forEach(s=>s.classList.toggle('active',s.dataset.cat===cat));
+}
+function switchCatSidebar(btn,cat){
+  syncCatUI(cat);currentCat=cat;selIds.clear();render();
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{history.replaceState(null,'','#'+cat);}catch(e){}
+}
+function applyCatFromHash(){
+  const hash=location.hash.replace('#','');
+  if(!CATS.includes(hash))return;
+  currentCat=hash;syncCatUI(hash);
+  document.getElementById('section-title').textContent=CAT_LABELS[hash];
+}
+
+// ── 로그인 ──
+function openLogin(){if(isAdmin){doLogout();return;}document.getElementById('pw-input').value='';document.getElementById('login-error').style.display='none';document.getElementById('login-modal').classList.add('open');setTimeout(()=>document.getElementById('pw-input').focus(),100);}
+function closeLogin(){document.getElementById('login-modal').classList.remove('open');}
+function doLogin(){
+  if(document.getElementById('pw-input').value===ADMIN_PW){
+    isAdmin=true;closeLogin();document.body.classList.add('admin-mode');
+    document.getElementById('admin-panel').classList.add('visible');
+    document.getElementById('admin-badge').style.display='inline';
+    document.getElementById('admin-btn-icon').innerHTML=`<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>`;
+    document.getElementById('admin-btn').style.color='var(--red-light)';
+    selIds.clear();render();showToast('관리자 로그인됨');
+  }else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
+}
+function doLogout(){
+  isAdmin=false;document.body.classList.remove('admin-mode');
+  document.getElementById('admin-panel').classList.remove('visible');
+  document.getElementById('admin-badge').style.display='none';
+  document.getElementById('grid-action-bar').classList.remove('visible');
+  document.getElementById('admin-btn-icon').innerHTML=`<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>`;
+  document.getElementById('admin-btn').style.color='';
+  selIds.clear();render();showToast('로그아웃 완료');
+}
+
+// ── 업로드 ──
+function openUpload(){fileQueue=[];['upload-error','progress-wrap'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('drop-zone').style.display='block';document.getElementById('upload-btn').disabled=false;document.getElementById('upload-cancel-btn').textContent='취소';document.getElementById('file-input').value='';renderQueue();document.getElementById('upload-modal').classList.add('open');document.addEventListener('paste',onPaste);}
+function closeUpload(){document.getElementById('upload-modal').classList.remove('open');fileQueue=[];document.getElementById('file-input').value='';document.removeEventListener('paste',onPaste);}
+function onPaste(e){const items=[...(e.clipboardData||{}).items||[]];const imgs=items.filter(i=>i.type.startsWith('image/'));if(!imgs.length)return;e.preventDefault();const files=imgs.map(i=>i.getAsFile()).filter(Boolean);if(files.length){addFiles(files);showToast(`📋 ${files.length}장 붙여넣기됨`);}}
+function onDragOver(e){e.preventDefault();document.getElementById('drop-zone').classList.add('drag-over');}
+function onDragLeave(){document.getElementById('drop-zone').classList.remove('drag-over');}
+function onDrop(e){e.preventDefault();document.getElementById('drop-zone').classList.remove('drag-over');addFiles([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/')));}
+function onFileSelect(e){addFiles([...e.target.files]);e.target.value='';}
+function addFiles(files){if(!files.length)return;document.getElementById('upload-error').style.display='none';const ni=new Array(files.length);let loaded=0;files.forEach((file,i)=>{const r=new FileReader();r.onload=ev=>{ni[i]={file,dataUrl:ev.target.result};if(++loaded===files.length){fileQueue.push(...ni);renderQueue();}};r.readAsDataURL(file);});}
+function renderQueue(){const w=document.getElementById('queue-wrap'),h=document.getElementById('queue-header');if(!fileQueue.length){w.style.display='none';h.style.display='none';document.getElementById('drop-zone').style.display='block';return;}document.getElementById('drop-zone').style.display='none';h.style.display='flex';document.getElementById('queue-count-label').textContent=`${fileQueue.length}장 선택됨`;w.style.display='block';w.innerHTML=fileQueue.map((item,i)=>`<div class="queue-item"><img class="queue-thumb" src="${item.dataUrl}" alt=""><span class="queue-name">${i+1}. ${item.file.name}</span><button class="queue-remove" onclick="removeFromQueue(${i})">✕</button></div>`).join('');}
+function removeFromQueue(idx){fileQueue.splice(idx,1);renderQueue();}
+
+async function doUpload(){
+  if(!fileQueue.length){document.getElementById('upload-error').style.display='block';return;}
+  const cat=document.getElementById('upload-cat').value;const btn=document.getElementById('upload-btn');
+  const pw=document.getElementById('progress-wrap'),pf=document.getElementById('progress-fill'),pt=document.getElementById('progress-text');
+  const total=fileQueue.length;const maxO=cards.filter(c=>c.cat===cat).reduce((m,c)=>Math.max(m,c.order||0),0);
+  btn.disabled=true;document.getElementById('upload-cancel-btn').textContent='업로드 중...';pw.style.display='block';
+  let done=0,failed=0,lastErr='';
+  for(let i=0;i<total;i++){
+    try{const fd=new FormData();fd.append('file',fileQueue[i].file);fd.append('upload_preset',UPLOAD_PRESET);fd.append('tags',`mimmomo_${cat}`);const res=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:fd});const data=await res.json();if(data.secure_url){if(data.delete_token)saveDToken(data.public_id,data.delete_token);cards.push({id:data.public_id,cat,url:`https://res.cloudinary.com/${CLOUD_NAME}/image/upload/f_auto,q_auto/${data.public_id}`,publicId:data.public_id,createdAt:new Date().toISOString(),order:maxO+i+1});}else{failed++;lastErr=data.error?.message||JSON.stringify(data);console.error('Upload error:',data);}}catch(err){failed++;lastErr=err.message;console.error(err);}
+    done++;pf.style.width=Math.round((done/total)*100)+'%';pt.textContent=`${done} / ${total}`;
+  }
+  saveOrder();render();closeUpload();if(failed>0){alert('업로드 실패:\n'+lastErr);}else{showToast(`${total}장 업로드 완료`);}
+}
+
+let toastTimer;
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2500);}
+
+applyCatFromHash();
+loadCards();
+</script>
+</body>
+</html>
